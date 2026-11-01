@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uvpc-vision-tracker"
+version = "0.1.0"
+description = "Experimental Computer Vision and person tracking portfolio project"
+requires-python = ">=3.10"
+dependencies = [
+    "opencv-python>=4.8,<5",
+    "ultralytics>=8.3,<9",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+uvpc = "uvpc.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

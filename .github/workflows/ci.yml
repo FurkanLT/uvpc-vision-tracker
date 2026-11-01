@@ -1,0 +1,27 @@
+name: Pure Python checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install package without heavyweight optional runtime dependencies
+        run: |
+          python -m pip install -e . --no-deps
+          python -m pip install 'pytest>=8,<10'
+      - name: Compile and smoke test
+        run: |
+          python -m compileall -q src tests examples
+          python -m uvpc --help
+          python examples/geometry_demo.py
+          python -m pytest -q
